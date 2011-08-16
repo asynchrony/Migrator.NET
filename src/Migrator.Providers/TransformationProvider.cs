@@ -245,14 +245,15 @@ namespace Migrator.Providers
 
 		public virtual void AddColumn(string table, string sqlColumn)
 		{
-			ExecuteNonQuery(String.Format("ALTER TABLE {0} ADD COLUMN {1}", table, sqlColumn));
+		    string sql = String.Format("ALTER TABLE [dbo].[{0}] ADD COLUMN '{1}'", table, sqlColumn);
+		    ExecuteNonQuery(sql);
 		}
 
-		public virtual void RemoveColumn(string table, string column)
+	    public virtual void RemoveColumn(string table, string column)
 		{
 			if (ColumnExists(table, column))
 			{
-				ExecuteNonQuery(String.Format("ALTER TABLE {0} DROP COLUMN {1} ", table, column));
+				ExecuteNonQuery(String.Format("ALTER TABLE [dbo].[{0}] DROP COLUMN [{1}] ", table, column));
 			}
 		}
 
@@ -260,7 +261,7 @@ namespace Migrator.Providers
 		{
 			try
 			{
-				ExecuteNonQuery(String.Format("SELECT {0} FROM {1}", column, table));
+				ExecuteNonQuery(String.Format("SELECT [dbo].[{0}] FROM {1}", column, table));
 				return true;
 			}
 			catch (Exception)
@@ -350,8 +351,7 @@ namespace Migrator.Providers
 
 			ColumnPropertiesMapper mapper =
 				_dialect.GetAndMapColumnProperties(new Column(column, type, size, property, defaultValue));
-
-			AddColumn(table, mapper.ColumnSql);
+            AddColumn(table, mapper.ColumnSql);
 		}
 
 		/// <summary>

@@ -50,7 +50,7 @@ namespace Migrator.Providers.SqlServer
 
         public override void AddColumn(string table, string sqlColumn)
         {
-            ExecuteNonQuery(string.Format("ALTER TABLE {0} ADD {1}", table, sqlColumn));
+            ExecuteNonQuery(string.Format("ALTER TABLE [dbo].[{0}] ADD {1}", table, sqlColumn));
         }
 
 		public override bool ColumnExists(string table, string column)

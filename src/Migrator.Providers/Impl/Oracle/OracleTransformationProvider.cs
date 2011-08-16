@@ -34,7 +34,7 @@ namespace Migrator.Providers.Oracle
 
         public override void AddColumn(string table, string sqlColumn)
         {
-            ExecuteNonQuery(String.Format("ALTER TABLE {0} ADD {1}", table, sqlColumn));
+            ExecuteNonQuery(String.Format("ALTER TABLE [dbo].[{0}] ADD {1}", table, sqlColumn));
         }
 
         public override bool ConstraintExists(string table, string name)
